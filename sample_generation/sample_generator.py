@@ -112,8 +112,13 @@ def generate_samples():
       processed_texts = []
       for text in text_to_speak:
         split_text = re.split(split_sentence_re, text)
+        words = split_text.split(" ")
+        final_words = []
+        for word in words:
+          if "http" not in word:
+            final_words.append(word)
+        split_text = final_words.join(" ")
         processed_texts += split_text
-        processed_texts
       
       print("Processing texts: ", processed_texts)
 

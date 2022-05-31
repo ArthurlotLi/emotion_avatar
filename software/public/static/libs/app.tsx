@@ -103,7 +103,7 @@ const audioWaitBetweenUtterances = 0; // in ms
 const audioEllipseWait = 1500; // in ms.
 
 const defaultEmotion = 10;
-const defaultSubtitles = "Play a random sample...";
+const defaultSubtitles = "Note: Unfiltered samples do not reflect author's views. Listener discretion advised.";
 
 export class App extends React.Component {
 
@@ -294,15 +294,15 @@ export class App extends React.Component {
               </div>
             </div>
 
-            <div id="skitSelectionSection">
-              <div id="skitSelectionSectionInner">
-                <button id="skitSelectionButton" onClick={this.onPlaySample.bind(this)}><b>Random Sample</b></button>
-              </div>
-            </div>
-
             <div id = "skitSubtitles">
               <div id="skitSubtitlesInner">
                 <div id = "skitSubtitlesText">{this.state.skitSubtitles}</div>
+              </div>
+
+              <div id="skitSelectionSection">
+                <div id="skitSelectionSectionInner">
+                  <button id="skitSelectionButton" onClick={this.onPlaySample.bind(this)}><b>Play Random Sample</b></button>
+                </div>
               </div>
             </div>
 
@@ -377,7 +377,7 @@ export class App extends React.Component {
                   <br/>
 
                   <div id="about">
-                    <button id="aboutButton" onClick={this.toggleAbout.bind(this)} >{this.state.showingPage1 ? "Citations" : "Main Page"}</button>
+                    <button id="aboutButton" onClick={this.toggleAbout.bind(this)} ><b>{this.state.showingPage1 ? "Citations" : "Main Page"}</b></button>
                   </div>
 
                   <br/>

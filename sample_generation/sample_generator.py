@@ -116,7 +116,7 @@ def generate_samples():
         words = text.split(" ")
         final_words = []
         for word in words:
-          if "http" not in word:
+          if "http" not in word and "haha" not in word:
             final_words.append(word)
         text = " ".join(final_words)
         split_text = re.split(split_sentence_re, text)

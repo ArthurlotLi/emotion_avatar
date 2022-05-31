@@ -8,7 +8,7 @@
   --primary-color: rgb(41, 41, 41);
   --secondary-color: rgb(0, 0, 0);
   --tertiary-color: rgb(255, 255, 255);
-  --background-color: rgb(182, 182, 182);
+  --background-color: rgb(151, 151, 151);
   --highlight-color: black;
   --text-color: black;
   --max-total-width: 1080px;
@@ -121,7 +121,8 @@ body{
 #skitSelectionSection{
   width: 100%;
   height: fit-content;
-  margin-top: 15px;
+  margin-top: 5px;
+  margin-bottom: 15px;
 }
 
 #skitSelectionSectionInner{
@@ -132,18 +133,6 @@ body{
   text-overflow: ellipsis;
   align-items: center;
   justify-content: center;
-}
-
-#skitSelectionLabel{
-  text-align: right;
-  padding-right: 10px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 16px;
-  padding: 5px;
 }
 
 #skitSelectionButton{
@@ -204,14 +193,12 @@ body{
 
 
 #skitSubtitles {
-  margin-top: 35px;
+  margin-top: 20px;
   bottom: 3vh;
   margin-bottom: 10px; 
   left: 0px;
   width: 100%;
-  height: 23vh;
-  max-height: 200px;
-  min-height: 200px;
+  height: fit-content;
   background-color: var(--background-color);
   overflow-x: hidden;
   overflow-y: auto;
@@ -221,11 +208,12 @@ body{
 #skitSubtitlesInner {
   vertical-align: middle;
   text-align: center;
-  height: 100%;
+  height: fit-content;
 }
 
 #skitSubtitlesText{
-  height: 100%;
+  height: 25vh;
+  max-height: 190px;
   margin-left: 20px;
   margin-right: 20px;
   overflow-x: hidden;
@@ -239,7 +227,7 @@ body{
 }
 
 #introduction{
-  margin-top: 50px;
+  margin-top: 30px;
 
   overflow: hidden;
   background-color: var(--background-color);
@@ -300,14 +288,15 @@ body{
 }
 
 #aboutButton {
-  right:0;
-  bottom: 0;
-  width: min(max(80%, 300px), 500px);
-  background-color: rgba(255, 255, 255);
-  border-radius: 5px;
-  color: var(--secondary-color);
-  font-size: 16px;
-  margin-top: min(1.0vw, 15px);
-  padding-top: 5px;
-  padding-bottom: 5px;
+  max-width: 570px;
+  width: 90%;
+  height: fit-content;
+  border: 1px solid black;
+  padding: 12px 12px;
+  cursor: pointer;
+  color: var(--tertiary-color);
+  background-color: var(--button1-color);
+  font-size: 18px;
+  text-overflow: ellipsis;
+  text-align: center;
 }

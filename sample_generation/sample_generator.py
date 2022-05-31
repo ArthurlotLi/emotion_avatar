@@ -35,7 +35,7 @@ _target = 2000
 _overlap = 400
 _batched = True
 _speaker = "VELVET"
-_samples_per_category = 100
+_samples_per_category = 130
 _user_vetting = False
 
 # Other parameters

@@ -103,7 +103,7 @@ const audioWaitBetweenUtterances = 0; // in ms
 const audioEllipseWait = 1500; // in ms.
 
 const defaultEmotion = 10;
-const defaultSubtitles = "Note: Unfiltered samples do not reflect author's views. Listener discretion advised.";
+const defaultSubtitles = "Note: Uncensored samples do not reflect author's views. Listener discretion advised.";
 
 export class App extends React.Component {
 

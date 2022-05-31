@@ -35,14 +35,12 @@ _target = 2000
 _overlap = 400
 _batched = True
 _speaker = "VELVET"
+_samples_per_category = 20
 
 # Other parameters
 _test_annotated = "test_annotated.csv"
 _destination_dir = "test_annotated"
 _destination_file = "test_annotated.json"
-
-#_total_samples = 10
-_samples_per_category = 2
 _num_categories = 7 # Expects 0 - 6 indices.
 
 def generate_samples():
@@ -83,7 +81,7 @@ def generate_samples():
     if len(sample_rows) >= total_samples:
       break
 
-    solution = row["solution"]
+    solution = row["prediction"]
     if category_counts[int(solution)] < _samples_per_category:
       print("")
       print("[%d/%d] - \"%s\"" % (int(row["prediction"]), int(row["solution"]), row["text"]))

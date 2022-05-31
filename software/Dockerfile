@@ -5,8 +5,8 @@
 # To build the docker container in WSL2:
 #
 # sudo rm /src -r; 
-# sudo cp /mnt/c/src/tales_of_skits/software /src -r; sudo chmod -R 777 /src; cd /src; 
-# sudo docker build --progress plain -f Dockerfile --tag tales_of_skits:1.0 .; sudo docker run --publish 80:80 -it tales_of_skits:1.0
+# sudo cp /mnt/c/src/emotion_avatar/software /src -r; sudo chmod -R 777 /src; cd /src; 
+# sudo docker build --progress plain -f Dockerfile --tag emotion_avatar:1.0 .; sudo docker run --publish 80:80 -it emotion_avatar:1.0
 
 # Start with the base nodejs container.
 FROM node:16

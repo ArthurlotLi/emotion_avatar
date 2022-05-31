@@ -103,7 +103,7 @@ const audioWaitBetweenUtterances = 0; // in ms
 const audioEllipseWait = 1500; // in ms.
 
 const defaultEmotion = 10;
-const defaultSubtitles = "Note: Unfiltered samples do not reflect author's views. Listener discretion advised.";
+const defaultSubtitles = "Note: Uncensored samples do not reflect author's views. Listener discretion advised.";
 
 export class App extends React.Component {
 
@@ -320,15 +320,60 @@ export class App extends React.Component {
                       Textual Emotion Detection for AI Assistants
                     </h2>
 
-                    <div id="overview">
-                      <img id="overviewImage"/>
+                    <br/>
+                    <div>
+                      What emotion should an AI Assistant feel while speaking? 
                     </div>
 
                     <br/>
 
                     <div>
-                      Description
+                      This website presents the concept of utilizing Textual Emotion Detection to "humanize" AI Assistants through real-time speech output inferencing. 
+
+                      The visual display of emotion categories accurately matching speech output may improve a user's overall experience with a virtual assistant.
                     </div>
+
+                    <br/>
+                    
+                    <div>
+                      Multispeaker Synthesis was utilized to synthesize audio for this concept website, using lower quality settings to allow for a larger, more diverse sample pool. 
+
+                      All presented samples are unseen by the model and may potentially be miscategorized. 
+                    </div>
+
+                    <br/>
+
+                    <div>
+                      The presented predictions in this website were output by a RoBERTa-Large representational autoencoder fine-tuned with the combined <i>ISEAR</i>, <i>WASSA-2017</i>, <i>Cecilia</i>, <i>DailyDialog</i>, <i>EmotionStimulus</i>, <i>MELD</i>, and <i>SMILE</i> datasets.
+
+                      The six Paul Ekman discrete emotion model categories as well as a "Neutral" category were used as targets.
+                    </div>
+
+                    <br/>
+
+                    <div>
+                      Runtime performance of the model was observed to be very reasonable, even on low-powered AI Assistant host machines, averaging around one second depending on the length of the output text. 
+
+                      The use of non-blocking threading operations ensured that the speech output of the AI Assistant was not hindered by this non-critical interaction enhancement. 
+                    </div>
+
+                    <br/>
+
+                    <hr/>
+
+                    <br/>
+
+                    <div>
+                      For more information regarding Multispeaker Synthesis, please see: <a target="_blank" href="http://talesofskits.com">http://talesofskits.com</a>
+                    </div>
+
+                    <br/>
+
+                    <div>
+                      For more information regarding the AI Assistant, please see: <a target="_blank" href="http://hobbyautomation.com">http://hobbyautomation.com</a>
+                    </div>
+
+                    <br/>
                   </div>
 
                   <div id="introductionPage2" style={this.state.introductionPage2Style}>
@@ -346,31 +391,65 @@ export class App extends React.Component {
                     <hr/>
 
                     <h2>Citations:</h2>
-                    
+
                     <div>
-                      <b>[1] LibriSpeech ASR Corpus</b> - <a target="_blank" href="https://www.openslr.org/12">https://www.openslr.org/12</a>
-                      <div>Published Paper (2015): <a target="_blank" href="https://ieeexplore.ieee.org/document/7178964">https://ieeexplore.ieee.org/document/7178964</a></div>
+                      <b>[1] Text‐based emotion detection: Advances, challenges, and opportunities</b> - <a target="_blank" href="https://onlinelibrary.wiley.com/doi/full/10.1002/eng2.12189">https://onlinelibrary.wiley.com/doi/full/10.1002/eng2.12189</a>
                       <p>
-                      <div>Panayotov, Vassil, et al. "Librispeech: an asr corpus based on public domain audio books."</div> 
-                      <div>&emsp;2015 IEEE international conference on acoustics, speech and signal processing (ICASSP).</div>
-                      <div>&emsp;IEEE, 2015.</div>
+                      <div>Acheampong, Francisca Adoma, Chen Wenyu, and Henry Nunoo‐Mensah. "Text‐based emotion</div>
+                      <div>&emsp;detection: Advances, challenges, and opportunities." Engineering Reports 2.7 (2020): e12189.</div>
                       </p>
                     </div>
 
                     <br/>
 
+                    <hr/>
+
+                    <br/>
+                    
                     <div>
-                      <b>[2] Vox Celeb1 Dataset</b> - <a target="_blank" href="https://www.robots.ox.ac.uk/~vgg/data/voxceleb/">https://www.robots.ox.ac.uk/~vgg/data/voxceleb/</a>
-                      <div>Published Paper (2020): <a target="_blank" href="https://www.sciencedirect.com/science/article/pii/S0885230819302712">https://www.sciencedirect.com/science/article/pii/S0885230819302712</a></div>
-                      <div>Published Paper (2017): <a target="_blank" href="https://arxiv.org/abs/1706.08612">https://arxiv.org/abs/1706.08612</a></div>
-                      <p>
-                      <div>Nagrani, Arsha, et al. "Voxceleb: Large-scale speaker verification in the wild." Computer</div> 
-                      <div>&emsp;Speech &#38; Language 60 (2020): 101027.</div>
-                      </p>
-                      <p>
-                      <div>Nagrani, Arsha, Joon Son Chung, and Andrew Zisserman. "Voxceleb: a large-scale speaker</div> 
-                      <div>&emsp;identification dataset." arXiv preprint arXiv:1706.08612 (2017).</div>
-                      </p>
+                      <b>[2] ISEAR</b> - <a target="_blank" href="https://www.kaggle.com/shrivastava/isears-dataset">https://www.kaggle.com/shrivastava/isears-dataset</a>
+                    </div>
+
+                    <br/>
+                    
+                    <div>
+                      <b>[3] WASSA-2017 Emotion Intensities(EmoInt)</b> - <a target="_blank" href="http://alt.qcri.org/semeval2017/task4/index.php4">http://alt.qcri.org/semeval2017/task4/index.php4</a>
+                    </div>
+
+                    <br/>
+                    
+                    <div>
+                      <b>[4] Cecilia Ovesdotter Alm's Affect data</b> - <a target="_blank" href="http://people.rc.rit.edu/∼coagla/affectdata/index.html">http://people.rc.rit.edu/∼coagla/affectdata/index.html</a>
+                    </div>
+
+                    <br/>
+                    
+                    <div>
+                      <b>[5] DailyDialog</b> - <a target="_blank" href="https://www.aclweb.org/anthology/I17-1099/">https://www.aclweb.org/anthology/I17-1099/</a>
+                    </div>
+                    
+                    <br/>
+                    
+                    <div>
+                      <b>[6] Emotion Stimulus</b> - <a target="_blank" href="http://www.site.uottawa.ca/∼diana/resources/emotion_stimulus_data">http://www.site.uottawa.ca/∼diana/resources/emotion_stimulus_data</a>
+                    </div>
+
+                    <br/>
+                    
+                    <div>
+                      <b>[7] MELD</b> - <a target="_blank" href="https://github.com/SenticNet/MELD">https://github.com/SenticNet/MELD</a>
+                    </div>
+
+                    <br/>
+                    
+                    <div>
+                      <b>[8] SMILE dataset</b> - <a target="_blank" href="https://figshare.com/articles/smile_annotations_final_csv/3187909">https://figshare.com/articles/smile_annotations_final_csv/3187909</a>
+                    </div>
+
+                    <br/>
+
+                    <div>
+                      <b>[9] Website samples</b> - <a target="_blank" href="https://www.kaggle.com/datasets/042977506d4b87fe2ce6998514bd60df9ae2bdde98acf973acfd87e758e50d68">https://www.kaggle.com/datasets/042977506d4b87fe2ce6998514bd60df9ae2bdde98acf973acfd87e758e50d68</a>
                     </div>
                   </div>
 

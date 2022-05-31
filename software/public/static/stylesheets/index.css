@@ -1,0 +1,316 @@
+/*
+  index.css
+
+  Stylesheet for the main page. 
+*/
+
+:root {
+  --primary-color: rgb(41, 41, 41);
+  --secondary-color: rgb(0, 0, 0);
+  --tertiary-color: rgb(255, 255, 255);
+  --background-color: rgba(255, 255, 255, 0.8);
+  --highlight-color: black;
+  --text-color: black;
+  --max-total-width: 980px;
+
+  --button1-color: rgb(6, 104, 101);
+  --button2-color: rgb(143, 41, 10);
+  --button3-color: rgb(197, 0, 108);
+}
+
+html{
+  font-family: -apple-system,BlinkMacSystemFont, "Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol","Noto Color Emoji";
+}
+
+body{
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+#mainBackground {
+  width: 100%;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+  position: absolute;
+  overflow:hidden;
+  left:0%;
+  top: 0%;
+}
+
+#mainBackgroundInner{
+  min-width: 100%;
+  height: 100%;
+  padding: 0px;
+}
+
+#mainBackgroundImg {
+  min-width: 100%;
+  height: 100%;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+#content{
+  position: absolute; 
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  bottom:0;
+  padding: 0px;
+  overflow: auto;
+}
+
+#contentInner{
+  top: 0px;
+  width: min(100%, var(--max-total-width));
+  margin: 0 auto;
+  height: fit-content;
+  padding: 0px;
+}
+
+#contentUpper{
+  width: 100%;
+  height: fit-content;
+  padding-bottom: 10px;
+}
+
+#contentLower{
+  width: 100%;
+  height: fit-content;
+  padding-top: 10px;
+}
+
+#title{
+  left: 0%;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  margin-top: 15px;
+  display:block;
+  color:var(--tertiary-color);
+  font-size: max(min(6.3vw, 75px), 35px);
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+}
+
+#subtitle{
+  left: 0%;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  display:block;
+  color:var(--tertiary-color);
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  font-size: min(24px, 4.7vw);
+}
+
+#skitSelectionSection{
+  width: 100%;
+  height: fit-content;
+  margin-top: 15px;
+}
+
+#skitSelectionSectionInner{
+  margin-top: 5px;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-items: center;
+  justify-content: center;
+}
+
+#skitSelectionLabel{
+  text-align: right;
+  padding-right: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+}
+
+#skitSelectionButton{
+  max-width: 570px;
+  width: 90%;
+  height: fit-content;
+  border: 1px solid #ccc;
+  padding: 12px 12px;
+  cursor: pointer;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font-size: 18px;
+  text-overflow: ellipsis;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#speakerImage{
+  margin-top: 10px;
+}
+
+#speakerImageInner{
+  height: 100%;
+  display: flex;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-color);
+  font-size: 18px;
+}
+
+#speakerContainer{
+}
+
+#speakerImageImg{
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 5px;
+  border-color: black;
+  border-width: 10px;
+  background-color: var(--background-color);
+  -webkit-backface-visibility: hidden; 
+  -ms-transform: translateZ(0); /* IE 9 */
+  -webkit-transform: translateZ(0); /* Chrome, Safari, Opera */
+  transform: translateZ(0);
+}
+
+#speakerImageName{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  color: var(--background-color);;
+  font-size: 18px;
+}
+
+
+#skitSubtitles {
+  margin-top: 35px;
+  bottom: 3vh;
+  margin-bottom: 10px; 
+  left: 0px;
+  width: 100%;
+  height: 23vh;
+  max-height: 200px;
+  min-height: 200px;
+  background-color: var(--background-color);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0px;
+}
+
+#skitSubtitlesInner {
+  vertical-align: middle;
+  text-align: center;
+  height: 100%;
+}
+
+#skitSubtitlesText{
+  height: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-color);
+  font-size: 18px;
+}
+
+#introduction{
+  margin-top: 50px;
+
+  overflow: hidden;
+  background-color: var(--background-color);
+  border-color: black;
+  border-radius: 5px;
+  border-width: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: min(max(2px,1.3%),10px);
+  padding-right: min(max(2px,1.3%),10px);
+  height: fit-content;
+}
+
+#introductionInner{
+  color:var(--text-color);
+  margin-top: 0;
+  margin-left: min(5%, 20px);
+  margin-right: min(5%, 20px);
+  height: fit-content;
+}
+
+
+#introductionHeader{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+  color:var(--text-color);
+  text-align: center;
+}
+
+#overview{
+  width: 100%;
+  min-height: 100%;
+  padding: 0px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+#overviewImage{
+  width: 100%;
+  min-height: 100%;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-backface-visibility: hidden; 
+  -ms-transform: translateZ(0); /* IE 9 */
+  -webkit-transform: translateZ(0); /* Chrome, Safari, Opera */
+  transform: translateZ(0);
+}
+
+#about{
+  height: fit-content;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#aboutButton {
+  right:0;
+  bottom: 0;
+  width: min(max(80%, 300px), 500px);
+  background-color: rgba(255, 255, 255);
+  border-radius: 5px;
+  color: var(--secondary-color);
+  font-size: 16px;
+  margin-top: min(1.0vw, 15px);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

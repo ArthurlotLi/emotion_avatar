@@ -1,0 +1,25 @@
+{
+  "compilerOptions":{
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "jsx": "react",
+    "types": [
+      "webpack-env",
+      "node"
+    ],
+    "lib": [
+      "es2018", "dom"
+    ]
+  },
+  "exclude":[
+    "node_modules"
+  ],
+  "files": [
+    "public/static/libs/app.tsx"
+  ]
+}

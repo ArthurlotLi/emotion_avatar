@@ -1,0 +1,38 @@
+{
+  "name": "tales_of_synthesis",
+  "version": "1.0.0",
+  "description": "Providing the results of TalesSkits and Multispeaker Synthesis in an entertaining fashion.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node_modules\\.bin\\webpack ./public/static/libs/app.tsx --config webpack-config.js && node server.js"
+  },
+  "engines" : { 
+    "npm" : ">=7.0.0",
+    "node" : ">=16.0.0"
+  },
+  "author": "Arthurlot Li",
+  "license": "ISC",
+  "dependencies": {
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-env": "^1.16.0",
+    "axios": "^0.27.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.3",
+    "file-loader": "^6.2.0",
+    "node-fetch": "^2.6.1",
+    "path": "^0.12.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-native-base64": "^0.2.1",
+    "stream": "^0.0.2",
+    "stream-browserify": "^3.0.0",
+    "ts-loader": "^9.2.2",
+    "typescript": "^4.2.4",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.31"
+  }
+}

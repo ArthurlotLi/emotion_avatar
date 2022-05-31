@@ -296,7 +296,7 @@ export class App extends React.Component {
 
             <div id="skitSelectionSection">
               <div id="skitSelectionSectionInner">
-                <button id="skitSelectionButton" onClick={this.onPlaySample.bind(this)}>Play Random Sample</button>
+                <button id="skitSelectionButton" onClick={this.onPlaySample.bind(this)}><b>Random Sample</b></button>
               </div>
             </div>
 

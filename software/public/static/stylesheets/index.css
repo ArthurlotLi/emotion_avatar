@@ -8,12 +8,12 @@
   --primary-color: rgb(41, 41, 41);
   --secondary-color: rgb(0, 0, 0);
   --tertiary-color: rgb(255, 255, 255);
-  --background-color: rgba(255, 255, 255, 0.8);
+  --background-color: rgb(182, 182, 182);
   --highlight-color: black;
   --text-color: black;
-  --max-total-width: 980px;
+  --max-total-width: 1080px;
 
-  --button1-color: rgb(6, 104, 101);
+  --button1-color: rgb(22, 112, 153);
   --button2-color: rgb(143, 41, 10);
   --button3-color: rgb(197, 0, 108);
 }
@@ -150,14 +150,13 @@ body{
   max-width: 570px;
   width: 90%;
   height: fit-content;
-  border: 1px solid #ccc;
+  border: 1px solid black;
   padding: 12px 12px;
   cursor: pointer;
-  color: var(--text-color);
-  background-color: var(--background-color);
+  color: var(--tertiary-color);
+  background-color: var(--button1-color);
   font-size: 18px;
   text-overflow: ellipsis;
-  border-radius: 5px;
   text-align: center;
 }
 
@@ -186,7 +185,6 @@ body{
   justify-content: center;
   text-align: center;
   overflow: hidden;
-  border-radius: 5px;
   border-color: black;
   border-width: 10px;
   background-color: var(--background-color);
@@ -246,7 +244,6 @@ body{
   overflow: hidden;
   background-color: var(--background-color);
   border-color: black;
-  border-radius: 5px;
   border-width: 10px;
   padding-top: 15px;
   padding-bottom: 15px;

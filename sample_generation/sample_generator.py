@@ -35,7 +35,8 @@ _target = 2000
 _overlap = 400
 _batched = True
 _speaker = "VELVET"
-_samples_per_category = 20
+_samples_per_category = 100
+_user_vetting = False
 
 # Other parameters
 _test_annotated = "test_annotated.csv"
@@ -83,12 +84,13 @@ def generate_samples():
 
     solution = row["prediction"]
     if category_counts[int(solution)] < _samples_per_category:
-      print("")
-      print("[%d/%d] - \"%s\"" % (int(row["prediction"]), int(row["solution"]), row["text"]))
-      print("\n%d - Accept [ENTER] or Reject [Any other Key + ENTER]" % len(sample_rows))
-      user_input = input()
+      if _user_vetting is True:
+        print("")
+        print("[%d/%d] - \"%s\"" % (int(row["prediction"]), int(row["solution"]), row["text"]))
+        print("\n%d - Accept [ENTER] or Reject [Any other Key + ENTER]" % len(sample_rows))
+        user_input = input()
 
-      if user_input == "":
+      if _user_vetting is False or user_input == "":
         sample_rows.append(row)
         category_counts[int(solution)] += 1
   
@@ -111,13 +113,13 @@ def generate_samples():
       # makes inference faster (as it happens in a batch).
       processed_texts = []
       for text in text_to_speak:
-        split_text = re.split(split_sentence_re, text)
-        words = split_text.split(" ")
+        words = text.split(" ")
         final_words = []
         for word in words:
           if "http" not in word:
             final_words.append(word)
-        split_text = final_words.join(" ")
+        text = " ".join(final_words)
+        split_text = re.split(split_sentence_re, text)
         processed_texts += split_text
       
       print("Processing texts: ", processed_texts)

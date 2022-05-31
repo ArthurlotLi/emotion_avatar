@@ -39,6 +39,8 @@ const sunsetEndHours = 8;
 const sunsetBeginHours = 18;
 const nightBeginHours = 19
 
+const jsonLocation = "../../../assets/test_annotated.json";
+
 // Classes and objects that will dynamically define the contents of
 // the page. 
 class Emotion {
@@ -104,7 +106,9 @@ const defaultSubtitles = "Play a random sample...";
 
 export class App extends React.Component {
 
-  skits: {};
+  playedSamples = [];
+  totalSamples = 0;
+  sample_json = null;
 
   state = {
     emotion: defaultEmotion,
@@ -121,16 +125,20 @@ export class App extends React.Component {
   }
 
   // Executed only once upon startup.
-  componentDidMount(){
+  async componentDidMount(){
+    let response = await fetch(jsonLocation,{
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }})
+    this.sample_json = await response.json();
+    this.totalSamples = this.sample_json.length;
+    console.log(this.sample_json);
+    console.log(this.totalSamples)
   }
 
 
-  async onSkitSelect(evt){
-    if(evt.target.value == ""){
-      alert("Please select a skit to watch!");
-      return
-    }
-
+  async onPlaySample(evt){
     let skitTitle = evt.target.value;
     if(skitTitle in this.skits){
       // Cancel any existing skits. 

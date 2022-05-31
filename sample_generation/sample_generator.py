@@ -14,6 +14,8 @@ from pathlib import Path
 import re
 from pydub import AudioSegment
 import pandas as pd
+import numpy as np
+import json
 
 sys.path.append("../../multispeaker_synthesis")
 
@@ -31,13 +33,17 @@ _embeds_fpath = Path("../../kotakee_companion/assets_audio/multispeaker_synthesi
 # Quality of the produced samples. 
 _target = 2000
 _overlap = 400
-_batched = False
+_batched = True
 _speaker = "VELVET"
 
 # Other parameters
 _test_annotated = "test_annotated.csv"
 _destination_dir = "test_annotated"
-_total_samples = 10
+_destination_file = "test_annotated.json"
+
+#_total_samples = 10
+_samples_per_category = 2
+_num_categories = 7 # Expects 0 - 6 indices.
 
 def generate_samples():
 
@@ -58,63 +64,94 @@ def generate_samples():
 
   # All set. Let's generate the files from the csv files.
   test_annotated_df = pd.read_csv(_test_annotated)
-  print(test_annotated_df)
-  input()
+  test_annotated_df = test_annotated_df.loc[:, ~test_annotated_df.columns.str.contains('^Unnamed')]
+
+  # Shuffle the dataframe.
+  test_annotated_df = test_annotated_df.iloc[np.random.permutation(len(test_annotated_df))]
 
   multispeaker_synthesis = MultispeakerSynthesis(synthesizer_fpath=_synthesizer_fpath,
     speaker_encoder_fpath=_speaker_encoder_fpath, target=_target, overlap=_overlap, 
     batched=_batched)
 
-  for a in range(len(speaker_samples_json)):
-    segment = speaker_samples_json[a]
+  # User selection of samples. 
+  total_samples = _samples_per_category * _num_categories
+  category_counts = []
+  for i in range(_num_categories): category_counts.append(0)
 
-    for speaker in segment:
-      samples = segment[speaker]
-      assert type(samples) == list
-      for i in range(len(samples)):
-        sample_pair = samples[i]
-        assert type(sample_pair) == dict
-        assert len(sample_pair) == 1
-        for transcript in sample_pair:
-          sample_filename = str(Path(destination_dir).joinpath("%d_%s_%d.wav" % (a, speaker, i)))
-          print("[INFO] Sample Generator - Processing: %s." % Path(sample_filename).name)
+  sample_rows = []
+  for index, row in test_annotated_df.iterrows():
+    if len(sample_rows) >= total_samples:
+      break
 
-          sample = sample_pair[transcript]
-          # Speak each sample. 
-          text_to_speak = [sample]
-          split_sentence_re = r'[\.|!|,|\?|:|;|-] '
+    solution = row["solution"]
+    if category_counts[int(solution)] < _samples_per_category:
+      print("")
+      print("[%d/%d] - \"%s\"" % (int(row["prediction"]), int(row["solution"]), row["text"]))
+      print("\n%d - Accept [ENTER] or Reject [Any other Key + ENTER]" % len(sample_rows))
+      user_input = input()
 
-          # The only preprocessing we do here is to split sentences into
-          # different strings. This makes the pronunciation cleaner and also
-          # makes inference faster (as it happens in a batch).
-          processed_texts = []
-          for text in text_to_speak:
-            split_text = re.split(split_sentence_re, text)
-            processed_texts += split_text
-            processed_texts
+      if user_input == "":
+        sample_rows.append(row)
+        category_counts[int(solution)] += 1
+  
+  # Sample generation given selected samples. 
+  samples = []
+  for row in sample_rows:
+    try:
+      transcript = row["text"]
+      solution = row["solution"]
+      prediction = row["prediction"]
 
-          wavs = multispeaker_synthesis.synthesize_audio_from_embeds(texts = processed_texts, 
-            embeds_fpath = Path(_embeds_fpath).joinpath(speaker + ".npy"), 
-            vocoder = _vocoder)
-          
-          assert len(wavs) == 1
+      sample_filename = str(Path(destination_dir).joinpath("%d.wav" % (len(samples))))
+      print("[INFO] Sample Generator - Processing: %s." % Path(sample_filename).name)
 
-          # save the wav. 
-          wav = wavs[0]
-          audio.save_wav(wav, sample_filename, sr=hparams.sample_rate)
-          # Normalize the audio. Not the best code, but it works in ~0.007 seconds.
-          wav_suffix = sample_filename.rsplit(".", 1)[1]
-          sound = AudioSegment.from_file(sample_filename, wav_suffix)
-          change_in_dBFS = -15.0 - sound.dBFS
-          normalized_sound = sound.apply_gain(change_in_dBFS)
-          normalized_sound.export(sample_filename, format=wav_suffix)
+      text_to_speak = [transcript]
+      split_sentence_re = r'[\.|!|,|\?|:|;|-] '
 
-          # For cheaper uploading, use .mp3 instead of uncompressed .wavs. 
-          #print("[INFO] Sample Generator - Converting from wav to mp3 with PyDub...")
-          #AudioSegment.from_wav(sample_filename).export(sample_filename.replace(".wav", ".mp3"), format="mp3")
-          #os.remove(sample_filename)
+      # The only preprocessing we do here is to split sentences into
+      # different strings. This makes the pronunciation cleaner and also
+      # makes inference faster (as it happens in a batch).
+      processed_texts = []
+      for text in text_to_speak:
+        split_text = re.split(split_sentence_re, text)
+        processed_texts += split_text
+        processed_texts
+      
+      print("Processing texts: ", processed_texts)
 
-          # All done with this!
+      wavs = multispeaker_synthesis.synthesize_audio_from_embeds(texts = processed_texts, 
+        embeds_fpath = Path(_embeds_fpath).joinpath(_speaker + ".npy"), 
+        vocoder = _vocoder)
+      
+      assert len(wavs) == 1
+
+      # save the wav. 
+      wav = wavs[0]
+      audio.save_wav(wav, sample_filename, sr=hparams.sample_rate)
+      # Normalize the audio. Not the best code, but it works in ~0.007 seconds.
+      wav_suffix = sample_filename.rsplit(".", 1)[1]
+      sound = AudioSegment.from_file(sample_filename, wav_suffix)
+      change_in_dBFS = -15.0 - sound.dBFS
+      normalized_sound = sound.apply_gain(change_in_dBFS)
+      normalized_sound.export(sample_filename, format=wav_suffix)
+
+      samples.append([solution, prediction, transcript])
+
+      # For cheaper uploading, use .mp3 instead of uncompressed .wavs. 
+      #print("[INFO] Sample Generator - Converting from wav to mp3 with PyDub...")
+      #AudioSegment.from_wav(sample_filename).export(sample_filename.replace(".wav", ".mp3"), format="mp3")
+      #os.remove(sample_filename)
+
+      # All done with this!
+    except Exception as e:
+      print("[WARNING] Sample Generator - exception processing row:")
+      print(row)
+      print("Exception:")
+      print(e)
+      print("")
+  
+  with open(_destination_file, 'w') as f:
+    json.dump(samples, f)
 
 if __name__ == "__main__":
   generate_samples()

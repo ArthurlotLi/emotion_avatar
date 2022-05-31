@@ -79,5 +79,5 @@ app.get('/listenSample', (req, res) =>{
 
 // Start the server to listen on this port.
 app.listen(listeningPort, () => {
-  console.log("Project Tales of Skits is online at port: " +listeningPort);
+  console.log("Project Emotion Avatar is online at port: " +listeningPort);
 });

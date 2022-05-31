@@ -40,6 +40,7 @@ const sunsetBeginHours = 18;
 const nightBeginHours = 19
 
 const jsonLocation = "../../../assets/test_annotated.json";
+const sampleLocation = "../../../assets/test_annotated";
 
 // Classes and objects that will dynamically define the contents of
 // the page. 
@@ -107,11 +108,13 @@ const defaultSubtitles = "Play a random sample...";
 export class App extends React.Component {
 
   playedSamples = [];
+  totalSamplesList = [];
   totalSamples = 0;
-  sample_json = null;
+  sampleJson = null;
 
   state = {
     emotion: defaultEmotion,
+    currentSample: -1,
     currentAudio: null,
     showingPage1: true,
     introductionPage1Style: defaultIntroductionPage1Style,
@@ -131,109 +134,91 @@ export class App extends React.Component {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
        }})
-    this.sample_json = await response.json();
-    this.totalSamples = this.sample_json.length;
-    console.log(this.sample_json);
-    console.log(this.totalSamples)
+    this.sampleJson = await response.json();
+    this.totalSamples = this.sampleJson.length;
+    for(var i = 0; i < this.totalSamples; i++){
+      this.totalSamplesList.push(i);
+    }
+    console.log(`Total samples: ${this.totalSamples}`)
   }
 
+  // Select a random sample that we haven't played before. 
+  async onPlaySample(){
+    // Reset the played samples if we've gone through them all. 
+    if(this.playedSamples.length >= this.totalSamples){
+      this.playedSamples = []
+    }
 
-  async onPlaySample(evt){
-    let skitTitle = evt.target.value;
-    if(skitTitle in this.skits){
-      // Cancel any existing skits. 
-      await this.setState({
-        currentSkit: skitTitle,
-      });
+    // Select a random sample that we haven't gotten before. 
+    let array = this.totalSamplesList.filter(e => !this.playedSamples.includes(e));
+    let randomElement = array[Math.floor(Math.random() * array.length)];
 
-      let skit = this.skits[skitTitle];
+    console.log(randomElement);
+    this.playedSamples.push(randomElement);
 
-      let response = await fetch(skit.skitJsonLocation,{
-        headers : { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-         }})
-      this.processTranscript(await response.json(), skit);
+    // Play the sample. 
+    let sampleIndex = randomElement;
+    this.playSample(sampleIndex);
+  }
+
+  async playSample(sampleIndex) {
+    let sampleSolution = this.sampleJson[sampleIndex][0];
+    let samplePrediction = this.sampleJson[sampleIndex][1];
+    let sampleText = this.sampleJson[sampleIndex][2];
+
+    let utteranceSubtitles = sampleText as string;
+    let utteranceWavFilename = `${sampleIndex}.wav`
+    
+    console.log(`[${utteranceWavFilename}]: [${sampleSolution} - ${samplePrediction}] \"${utteranceSubtitles}\"`)
+
+    // Display image and text. 
+    this.setState({
+      emotion: parseInt(samplePrediction),
+      skitSubtitles: "Sample: \"" + sampleText + "\"",
+      currentSample: sampleIndex
+    });
+    
+
+    // Load the audio
+    let audio = new Audio(sampleLocation + "/" + utteranceWavFilename);
+    let currentAudio = this.state.currentAudio;
+    if(currentAudio != null){
+      currentAudio.pause();
+      currentAudio = null;
+    }
+    await this.setState({
+      currentAudio: audio,
+      playingAudio: true
+    });
+
+    if(utteranceSubtitles == "..."){
+      await new Promise(r => setTimeout(r, audioEllipseWait));
     }
     else{
-      // Cancel the skit. 
-      console.log("[INFO] Skit cancelled entirely! No replacement selected.")
-      this.resetSkits();
-    }
-  }
-/*
-  async processTranscript(skitTranscript, skit) {
-    fetch(apiURL + "/watchSkit");
-    for(var i = 0; i < skitTranscript.length; i++){
-      if(this.state.currentSkit != skit.skitName) break;
-      let segment = skitTranscript[i];
-      for (const [speaker, utterances] of Object.entries(segment)) {
-        if(this.state.currentSkit != skit.skitName) break;
-        let listUtterances = utterances as Array<Object>;
-        // Note there should ever only be one speaker and one list of utterances.
-        for(var j=0; j< listUtterances.length; j++){
-          if(this.state.currentSkit != skit.skitName) break;
-          let utterance = listUtterances[j];
-          for (const [subtitles, _] of Object.entries(utterance)) {
-            if(this.state.currentSkit != skit.skitName) break;
-            // And there should only be one pair - the transcript and what
-            // was submitted to the model. 
-
-            let utteranceSubtitles = subtitles as string;
-            let utteranceSpeaker = speaker as string;
-            let utteranceWavFilename = `${i}_${utteranceSpeaker}_${j}.wav`
-            
-            console.log(`[${utteranceWavFilename}] ${utteranceSpeaker}: \"${utteranceSubtitles}\"`)
-
-            // Display image and text. 
-            await this.setState({
-              speakerImage: utteranceSpeaker,
-              skitSubtitles: utteranceSubtitles,
-            });
-            
-
-            // Load the audio
-            let audio = new Audio(skit.skitSamples + "/" + utteranceWavFilename);
-            let currentAudio = this.state.currentAudio;
-            if(currentAudio != null){
-              currentAudio.pause();
-              currentAudio = null;
-            }
-            await this.setState({
-              currentAudio: audio,
-              playingAudio: true
-            });
-
-            if(utteranceSubtitles == "..."){
-              await new Promise(r => setTimeout(r, audioEllipseWait));
-            }
-            else{
-              audio.play();
-              // Wait 50 ms until the audio is done. 
-              while(!audio.paused){
-                if(this.state.currentSkit != skit.skitName) {
-                  audio.pause();
-                  break;
-                }
-                await new Promise(r => setTimeout(r, audioEndedChecking));
-              }
-            }
-            fetch(apiURL +"/listenSample");
-
-            // An extra pause between utterances. 
-            if(audioWaitBetweenUtterances > 0){
-              await new Promise(r => setTimeout(r, audioWaitBetweenUtterances));
-            }
-          }
-        }
+      audio.play();
+      // Wait 50 ms until the audio is done. 
+      while(!audio.paused){
+        await new Promise(r => setTimeout(r, audioEndedChecking));
       }
     }
+    fetch(apiURL +"/listenSample");
 
-    // Skit has completed.
-    if(this.state.currentSkit == skit.skitName){
-      this.resetSkits();
+    // An extra pause between utterances. 
+    if(audioWaitBetweenUtterances > 0){
+      await new Promise(r => setTimeout(r, audioWaitBetweenUtterances));
     }
-  }*/
+    
+    if(this.state.currentSample == sampleIndex)
+      this.resetEmotion();
+  }
+
+  resetEmotion(){
+    this.setState({
+      emotion: defaultEmotion,
+      skitSubtitles: defaultSubtitles,
+      sampleIndex: -1,
+    });
+  }
 
   async toggleAbout() {
     var modifiedPage1Style = Object.assign({}, this.state.introductionPage1Style);
@@ -293,7 +278,7 @@ export class App extends React.Component {
               </h2>
               <div id="speakerImageName"><b>{
                 this.state.emotion == 10 || this.state.emotion == 11 ? "<Waiting>" 
-                : "<" + solutionStringMap[this.state.emotion].replace(/(\w)(\w*)/g, function(g0,g1,g2){return g1.toUpperCase() + g2.toLowerCase();} + ">")}</b>
+                : "<" + solutionStringMap[this.state.emotion].replace(/(\w)(\w*)/g, function(g0,g1,g2){return g1.toUpperCase() + g2.toLowerCase();}).toString() + ">"}</b>
               </div>
             </div>
 
@@ -311,7 +296,7 @@ export class App extends React.Component {
 
             <div id="skitSelectionSection">
               <div id="skitSelectionSectionInner">
-                <button id="skitSelectionButton">Play Random Sample</button>
+                <button id="skitSelectionButton" onClick={this.onPlaySample.bind(this)}>Play Random Sample</button>
               </div>
             </div>
 

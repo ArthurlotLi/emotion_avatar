@@ -51,6 +51,7 @@ body{
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+  background-color: var(--primary-color);
 }
 
 #content{

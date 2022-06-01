@@ -265,7 +265,7 @@ export class App extends React.Component {
       <div>
         <div id = "mainBackground">
           <div id="mainBackgroundInner">
-            <img id="mainBackgroundImg"/>
+            <div id="mainBackgroundImg"/>
           </div>
         </div>
 
@@ -338,7 +338,7 @@ export class App extends React.Component {
                     <div>
                       Multispeaker Synthesis was utilized to synthesize audio for this concept website, using lower quality settings to allow for a larger, more diverse sample pool. 
 
-                      All presented samples are unseen by the model and may potentially be miscategorized. 
+                      All provided samples are unseen by the model and may potentially be miscategorized. 
                     </div>
 
                     <br/>

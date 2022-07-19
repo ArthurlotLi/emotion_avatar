@@ -5,4 +5,4 @@ a stylistically themed web application.
 
 For more information, please see [Emotion Avatar](http://emotionavatar.com/).
 
-[![Emotion Avatar Website](https://i.imgur.com/mM2eWXg.png "Emotion Avatar Website")](http://machinepianist.com/)
+[![Emotion Avatar Website](https://i.imgur.com/mM2eWXg.png "Emotion Avatar Website")](http://emotionavatar.com/)
